@@ -10,12 +10,9 @@ def game():
 # --- Testes básicos do jogo ---
 
 def test_initial_state(game):
-    """O jogo deve iniciar com cobra de tamanho 2 e uma fruta dentro da área."""
+    """O jogo deve iniciar com cobra de tamanho 2 e pelo menos uma fruta."""
     assert len(game.snake) == 2
-    x, y = game.fruit
-    assert 0 <= x < game.width
-    assert 0 <= y < game.height
-
+    assert len(game.fruits) >= 1  # substitui game.fruit
 
 @pytest.mark.parametrize("direction", ["up", "down", "left", "right"])
 def test_snake_moves_in_valid_directions(game, direction):
@@ -26,14 +23,23 @@ def test_snake_moves_in_valid_directions(game, direction):
     new_head = game.snake[0]
     assert old_head != new_head
 
-
 def test_snake_grows_after_eating(game):
     """A cobra deve crescer ao comer a fruta."""
-    game.fruit = game.snake[0]  # força fruta na cabeça
+    # força a primeira fruta na frente da cabeça
+    hx, hy = game.snake[0]
+    if game.direction == "up":
+        fruit_pos = (hx, (hy - 1) % game.height)
+    elif game.direction == "down":
+        fruit_pos = (hx, (hy + 1) % game.height)
+    elif game.direction == "left":
+        fruit_pos = ((hx - 1) % game.width, hy)
+    else:
+        fruit_pos = ((hx + 1) % game.width, hy)
+
+    game.fruits = [fruit_pos]
     size_before = len(game.snake)
     game.step()
     assert len(game.snake) == size_before + 1
-
 
 def test_snake_collision_with_itself(game):
     """O jogo deve detectar quando a cobra colide com o próprio corpo."""

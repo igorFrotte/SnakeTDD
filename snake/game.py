@@ -4,19 +4,25 @@ class SnakeGame:
     def __init__(self, width=10, height=10):
         self.width = width
         self.height = height
-
-        # Inicializa a cobra com tamanho 2
-        self.snake = [(width // 2, height // 2), (width // 2, height // 2 + 1)]
+        self.snake = [(width//2, height//2), (width//2, height//2 + 1)]
         self.direction = "up"
+        self.fruits = []
+        self.update_fruits()
 
-        # Coloca a primeira fruta
-        self.place_fruit()
+    def update_fruits(self):
+        """Define quantas frutas devem existir com base no tamanho da cobra"""
+        num_fruits = 1 + (len(self.snake) // 10)
+        # mantém frutas existentes, adiciona novas se necessário
+        while len(self.fruits) < num_fruits:
+            self.place_new_fruit()
 
-    def place_fruit(self):
+    def place_new_fruit(self):
         empty_cells = [(x, y) for x in range(self.width)
-                       for y in range(self.height)
-                       if (x, y) not in self.snake]
-        self.fruit = random.choice(empty_cells) if empty_cells else None
+                    for y in range(self.height)
+                    if (x, y) not in self.snake and (x, y) not in self.fruits]
+        if empty_cells:
+            self.fruits.append(random.choice(empty_cells))
+
 
     def change_direction(self, new_dir):
         allowed = {"up", "down", "left", "right"}
@@ -44,10 +50,11 @@ class SnakeGame:
 
         new_head = (head_x, head_y)
 
-        # cresce se comer fruta ou se a fruta estiver na posição da cabeça 
-        if new_head == self.fruit or self.snake[0] == self.fruit:
-            self.snake = [new_head] + self.snake  # cresce
-            self.place_fruit()
+        # verifica se comeu alguma fruta
+        if new_head in self.fruits:
+            self.snake = [new_head] + self.snake
+            self.fruits.remove(new_head)
+            self.update_fruits()
         else:
             self.snake = [new_head] + self.snake[:-1]
 
