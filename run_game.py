@@ -1,6 +1,6 @@
 import time
 from snake.game import SnakeGame
-from snake_screen import io_handler
+from snake.snake_screen import io_handler
 
 def main():
     game = SnakeGame(width=10, height=10)
