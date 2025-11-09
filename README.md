@@ -1,6 +1,6 @@
-# Snake TDD Game
+# Snake TDD Game (com Pygame)
 
-Este é um projeto de implementação do clássico jogo **Snake**, desenvolvido seguindo os princípios de **Test Driven Development (TDD)**. O projeto também foi estruturado para, futuramente, permitir integração com algoritmos de Machine Learning que aprendam a jogar o jogo com base nas tentativas da cobra.
+Este é um projeto de implementação do clássico jogo **Snake**, desenvolvido seguindo os princípios de **Test Driven Development (TDD)**. O projeto também foi estruturado para permitir futuras integrações com algoritmos de Machine Learning que aprendam a jogar o jogo com base nas tentativas da cobra.
 
 ---
 
@@ -11,6 +11,7 @@ Este é um projeto de implementação do clássico jogo **Snake**, desenvolvido 
 * A cobra pode atravessar as bordas da tela (wrap-around).
 * Quando a cobra atinge tamanho 10, duas frutas aparecem simultaneamente; quando atinge tamanho 20, três frutas, e assim por diante.
 * O projeto foi desenvolvido em etapas, usando TDD, garantindo testes unitários de cada funcionalidade.
+* A partir da Stage 4, o jogo utiliza **Pygame** para exibição e captura de inputs, substituindo o antigo `keyboard`.
 
 ---
 
@@ -18,16 +19,19 @@ Este é um projeto de implementação do clássico jogo **Snake**, desenvolvido 
 
 Para rodar o projeto, você precisará das seguintes bibliotecas Python:
 
-* `keyboard` – captura do teclado (necessita root no Linux)
+* `pygame` – motor gráfico e captura de inputs
 
-  ```bash
-  pip install keyboard
-  ```
+```bash
+pip install pygame
+```
+
 * `pytest` – para rodar os testes
 
-  ```bash
-  pip install pytest
-  ```
+```bash
+pip install pytest
+```
+
+> Não é mais necessário usar `keyboard` nem permissões de root no Linux.
 
 ---
 
@@ -43,10 +47,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-2. Rodar o jogo com permissões de root (necessário para `keyboard`):
+2. Rodar o jogo:
 
 ```bash
-sudo ./venv/bin/python3 run_game.py
+python3 run_game.py
 ```
 
 3. Controles:
@@ -57,13 +61,21 @@ sudo ./venv/bin/python3 run_game.py
 * **D** → mover para direita
 * **ESC** → sair do jogo
 
-4. O jogo atualiza a cada `game_speed` segundos (configurável no `io_handler`).
+4. Configuração visual:
+
+* A janela é definida pelo **tamanho da matriz do jogo** (`game_width` x `game_height`) e pelo **tamanho das células** (`cell_size`) no `PygameHandler`.
+* Exemplo de inicialização com janela maior:
+
+```python
+game = SnakeGame(width=20, height=20)
+io_handler = PygameHandler(game_width=20, game_height=20, cell_size=40)
+```
 
 ---
 
 ## 🧪 Rodando os testes
 
-Para executar todos os testes unitários (Stages 1, 2 e 3):
+Para executar todos os testes unitários (Stages 1, 2, 3 e 4):
 
 ```bash
 pytest -v
@@ -77,5 +89,3 @@ pytest -v
 
 * Integração com algoritmos de Machine Learning para treinar a cobra automaticamente.
 * Ajustes na interface para melhor experiência visual e feedback.
-
----

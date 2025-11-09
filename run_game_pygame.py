@@ -2,8 +2,8 @@ from snake.game import SnakeGame
 from snake.pygame_handler import PygameHandler
 
 def main():
-    game = SnakeGame(10, 10)
-    io = PygameHandler(10, 10, cell_size=32, fps=10, asset_path="assets")
+    game = SnakeGame(20, 20)
+    io = PygameHandler(20, 20, cell_size=32, fps=10, asset_path="assets")
 
     running = True
     while running:
