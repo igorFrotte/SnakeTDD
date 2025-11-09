@@ -19,21 +19,15 @@ Este é um projeto de implementação do clássico jogo **Snake**, desenvolvido 
 
 Para rodar o projeto, você precisará das seguintes bibliotecas Python:
 
-* `pygame` – motor gráfico e captura de inputs
-
-```bash
-pip install pygame
-```
-
+* `pygame` – para interface gráfica e captura de teclado
 * `pytest` – para rodar os testes
+* `keyboard` – opcional (não necessário para rodar o jogo com Pygame)
+
+Você pode instalar todas com:
 
 ```bash
-pip install pytest
+pip install -r requirements.txt
 ```
-
-> Não é mais necessário usar `keyboard` nem permissões de root no Linux.
-
----
 
 ## ▶️ Como jogar
 
